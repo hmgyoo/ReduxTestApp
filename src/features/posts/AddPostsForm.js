@@ -1,21 +1,26 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit'
 import { postAdded } from './postSlice'
+import {Picker} from '@react-native-picker/picker'
 
 const AddPostsForm = () => {
 
   // use state variables
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [selectedUserId, setSelectedUserId] = useState('');
 
   // create dispatch const
   const dispatch = useDispatch()
+
+  const users = useSelector(state => state.users)
   
   // event triggers when text is updated
   const onTitleChange = text => setTitle(text);
-  const onContentChange = text => setContent(text)
+  const onContentChange = text => setContent(text);
+  const onAuthorChange = itemValue => setSelectedUserId(itemValue);
 
   // function for saving post
   const onSavePost = () => {
@@ -26,18 +31,21 @@ const AddPostsForm = () => {
 
     if (title && content) {
       dispatch(
-        postAdded({
-          id: nanoid(),
-          title,
-          content,
-        })
-      )
+        postAdded(title, content, selectedUserId))
 
       // empty the text input once button is clicked 
       setTitle('')
       setContent('')
+      setSelectedUserId('')
     }
   }
+
+  // user logic
+  const canSave = Boolean(title) && Boolean(content) && Boolean(selectedUserId)
+
+  const usersOptions = users.map(user => (
+    <Picker.Item key={user.id} label={user.name} value={user.id} />
+  ));
 
   return (
     <View style={styles.container}>
@@ -58,7 +66,15 @@ const AddPostsForm = () => {
           multiline
           placeholder="Enter post content"
         />
-        <TouchableOpacity style={styles.button} onPress={onSavePost}>
+        <Text style={styles.label}>Author</Text>
+        <Picker
+          selectedValue={selectedUserId}
+          onValueChange={onAuthorChange}
+        >
+          <Picker.Item label="" value="" />
+          {usersOptions}
+        </Picker>
+        <TouchableOpacity style={styles.button} onPress={onSavePost} disabled={!canSave}>
           <Text style={styles.buttonText}>Save Post</Text>
         </TouchableOpacity>
       </View>

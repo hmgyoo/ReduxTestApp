@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { UseSelector, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import PostAuthor from './PostAuthor'
+import TimeAgo from './TimeAgo'
 
 const SinglePostPage = ({ route }) => {
   
@@ -30,8 +32,10 @@ const SinglePostPage = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.postContainer}>
+        <PostAuthor userId={post.user}/>
         <Text style={styles.title}>{post.title}</Text>
         <Text style={styles.content}>{post.content}</Text>
+        <TimeAgo timestamp={post.date}/>
         <TouchableOpacity style={styles.button} onPress={handleEditPost}>
           <Text style={styles.buttonText}>
             Edit post
@@ -64,7 +68,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
-    color: '#000'
+    color: '#000',
+    marginTop: 12,
   },
   content: {
     fontSize: 16,

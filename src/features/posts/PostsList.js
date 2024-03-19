@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import PostAuthor from './PostAuthor';
+import TimeAgo from './TimeAgo';
 
 export const PostsList = () => {
 
@@ -11,14 +13,22 @@ export const PostsList = () => {
   // initialize the navigation
   const navigation = useNavigation();
 
-  const renderedPosts = posts.map(post => (
+  const orderedPosts = [...posts].sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA;
+  });
+
+  const renderedPosts = orderedPosts.map(post => (
     <TouchableOpacity 
         style={styles.postContainer} 
         key={post.id}
         onPress={() => navigation.navigate('Post Info', {postId: post.id})}
     >
+      <PostAuthor userId={post.user} />
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.content}>{post.content.substring(0, 100)}</Text>
+      <TimeAgo timestamp={post.date}/>
       <Text style={styles.button}>View Post</Text>
     </TouchableOpacity>
   ));
@@ -52,7 +62,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000'
+    color: '#000',
+    marginTop: 12,
   },
   content: {
     fontSize: 16,
