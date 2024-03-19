@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import PostAuthor from './PostAuthor';
 import TimeAgo from './TimeAgo';
@@ -26,8 +26,8 @@ export const PostsList = () => {
         key={post.id}
         onPress={() => navigation.navigate('Post Info', {postId: post.id})}
     >
-      <PostAuthor userId={post.user} />
       <Text style={styles.title}>{post.title}</Text>
+      <PostAuthor userId={post.user} />
       <Text style={styles.content}>{post.content.substring(0, 100)}</Text>
       <TimeAgo timestamp={post.date}/>
       <ReactionButton post={post}/>
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
-    marginTop: 12,
   },
   content: {
     fontSize: 16,
