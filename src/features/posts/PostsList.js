@@ -1,15 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export const PostsList = () => {
+
+  // target the post in the slice
   const posts = useSelector(state => state.posts);
 
+  // initialize the navigation
+  const navigation = useNavigation();
+
   const renderedPosts = posts.map(post => (
-    <View style={styles.postContainer} key={post.id}>
+    <TouchableOpacity 
+        style={styles.postContainer} 
+        key={post.id}
+        onPress={() => navigation.navigate('Post Info', {postId: post.id})}
+    >
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.content}>{post.content.substring(0, 100)}</Text>
-    </View>
+      <Text style={styles.button}>View Post</Text>
+    </TouchableOpacity>
   ));
 
   return (
@@ -46,5 +57,8 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     color: '#525152'
+  },
+  button: {
+    color: 'blue',
   },
 });
