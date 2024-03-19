@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-nativ
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit'
-import { postAdded } from '../features/posts/postSlice'
+import { postAdded } from './postSlice'
 
 const AddPostsForm = () => {
 

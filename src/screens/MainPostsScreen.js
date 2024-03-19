@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { PostsList } from '../components/PostsList'
-import AddPostsForm from '../components/AddPostsForm'
+import { PostsList } from '../features/posts/PostsList'
+import AddPostsForm from '../features/posts/AddPostsForm'
 
 const MainPostsScreen = () => {
   return (
