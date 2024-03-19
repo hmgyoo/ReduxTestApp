@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import PostAuthor from './PostAuthor';
 import TimeAgo from './TimeAgo';
+import ReactionButton from './ReactionButton';
 
 export const PostsList = () => {
 
@@ -29,6 +30,7 @@ export const PostsList = () => {
       <Text style={styles.title}>{post.title}</Text>
       <Text style={styles.content}>{post.content.substring(0, 100)}</Text>
       <TimeAgo timestamp={post.date}/>
+      <ReactionButton post={post}/>
       <Text style={styles.button}>View Post</Text>
     </TouchableOpacity>
   ));

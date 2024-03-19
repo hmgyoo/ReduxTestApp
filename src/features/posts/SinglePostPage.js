@@ -4,6 +4,7 @@ import { UseSelector, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import PostAuthor from './PostAuthor'
 import TimeAgo from './TimeAgo'
+import ReactionButton from './ReactionButton'
 
 const SinglePostPage = ({ route }) => {
   
@@ -36,6 +37,7 @@ const SinglePostPage = ({ route }) => {
         <Text style={styles.title}>{post.title}</Text>
         <Text style={styles.content}>{post.content}</Text>
         <TimeAgo timestamp={post.date}/>
+        <ReactionButton post={post}/>
         <TouchableOpacity style={styles.button} onPress={handleEditPost}>
           <Text style={styles.buttonText}>
             Edit post

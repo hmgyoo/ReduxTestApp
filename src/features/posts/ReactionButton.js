@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { reactionAdded } from './postSlice'
 
 // reactions emojis
 const reactionsEmoji = {
@@ -11,9 +13,15 @@ const reactionsEmoji = {
 }
 
 const ReactionButton = ({ post }) => {
-  const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
+
+  // call dispatch to carry out event triggers
+  const dispatch = useDispatch();
+
+  const reactionButtons = Object.entries(reactionsEmoji).map(([name, emoji]) => {
     return (
-      <TouchableOpacity key={name} style={styles.reactionButton}>
+      <TouchableOpacity key={name} style={styles.reactionButton} 
+        onPress={() => dispatch(reactionAdded({postId: post.id, reaction: name}))
+        }>
         <Text style={styles.emoji}>{emoji}</Text>
         <Text style={styles.count}>{post.reactions[name]}</Text>
       </TouchableOpacity>
