@@ -29,15 +29,22 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    color: '#000'
   },
   postContainer: {
     marginBottom: 16,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#ccc',
+    padding: 16
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#000'
   },
   content: {
     fontSize: 16,
+    color: '#525152'
   },
 });
